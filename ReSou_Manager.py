@@ -66,3 +66,19 @@ def monitor_gpu(excluded_processes):
                 print(f"GPU is heavily used: {gpu.name}, load: {gpu.load * 100:.2f}%")
                 # Optional: Terminate processes based on GPU load
         time.sleep(5)
+
+# Main function to handle the optimizer
+def resource_optimizer():
+    excluded_processes = get_processes_to_exclude()
+    resources = select_resources_to_monitor()
+
+    # Start threads based on resource choices
+    if 1 in resources or 4 in resources:
+        Thread(target=monitor_ram, args=(excluded_processes,)).start()
+    if 2 in resources or 4 in resources:
+        Thread(target=monitor_cpu, args=(excluded_processes,)).start()
+    if 3 in resources or 4 in resources:
+        Thread(target=monitor_gpu, args=(excluded_processes,)).start()
+
+if __name__ == '__main__':
+    resource_optimizer()

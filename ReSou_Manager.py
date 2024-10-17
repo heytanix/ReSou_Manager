@@ -21,3 +21,15 @@ else:
 def get_processes_to_exclude():
     excluded_processes = input("Enter processes to exclude (comma-separated): ").split(',')
     return [proc.strip() for proc in excluded_processes]
+
+# Function to select resources to monitor
+def select_resources_to_monitor():
+    print("\nSelect resources to monitor:")
+    print("1. RAM")
+    print("2. CPU")
+    print("3. GPU")
+    print("4. All of the above")
+    
+    choice = input("Enter your choice (comma-separated for multiple): ")
+    resources = [int(x.strip()) for x in choice.split(',')]
+    return resources

@@ -44,3 +44,14 @@ def monitor_ram(excluded_processes):
                     print(f"Killing {proc.info['name']} using {proc.info['memory_percent']:.2f}% of RAM")
                     psutil.Process(proc.info['pid']).terminate()
         time.sleep(5)  # Adjust based on monitoring frequency
+
+# Function to monitor CPU usage
+def monitor_cpu(excluded_processes):
+    print("Monitoring CPU usage...")
+    while True:
+        for proc in psutil.process_iter(['pid', 'name', 'cpu_percent']):
+            if proc.info['name'] not in essential_processes and proc.info['name'] not in excluded_processes:
+                if proc.info['cpu_percent'] > 50.0:  # Arbitrary threshold
+                    print(f"Killing {proc.info['name']} using {proc.info['cpu_percent']:.2f}% of CPU")
+                    psutil.Process(proc.info['pid']).terminate()
+        time.sleep(5)

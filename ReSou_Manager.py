@@ -17,3 +17,7 @@ elif system_platform == 'Darwin':  # MacOS
 else:
     essential_processes = []
 
+# Function to get processes to monitor
+def get_processes_to_exclude():
+    excluded_processes = input("Enter processes to exclude (comma-separated): ").split(',')
+    return [proc.strip() for proc in excluded_processes]

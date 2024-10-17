@@ -55,3 +55,14 @@ def monitor_cpu(excluded_processes):
                     print(f"Killing {proc.info['name']} using {proc.info['cpu_percent']:.2f}% of CPU")
                     psutil.Process(proc.info['pid']).terminate()
         time.sleep(5)
+
+# Function to monitor GPU usage
+def monitor_gpu(excluded_processes):
+    print("Monitoring GPU usage...")
+    while True:
+        gpus = GPUtil.getGPUs()
+        for gpu in gpus:
+            if gpu.load * 100 > 80.0:  # Threshold for GPU load
+                print(f"GPU is heavily used: {gpu.name}, load: {gpu.load * 100:.2f}%")
+                # Optional: Terminate processes based on GPU load
+        time.sleep(5)

@@ -33,3 +33,14 @@ def select_resources_to_monitor():
     choice = input("Enter your choice (comma-separated for multiple): ")
     resources = [int(x.strip()) for x in choice.split(',')]
     return resources
+
+# Function to monitor RAM usage
+def monitor_ram(excluded_processes):
+    print("Monitoring RAM usage...")
+    while True:
+        for proc in psutil.process_iter(['pid', 'name', 'memory_percent']):
+            if proc.info['name'] not in essential_processes and proc.info['name'] not in excluded_processes:
+                if proc.info['memory_percent'] > 30.0:  # Arbitrary threshold for demonstration
+                    print(f"Killing {proc.info['name']} using {proc.info['memory_percent']:.2f}% of RAM")
+                    psutil.Process(proc.info['pid']).terminate()
+        time.sleep(5)  # Adjust based on monitoring frequency
